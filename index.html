@@ -2,593 +2,210 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>המסע החודשי של השכר ברימון — מיפוי תהליך</title>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&family=Assistant:wght@600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>המסע החודשי של השכר ברימון — לוח בקרה</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Assistant:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #1a1f2e;
-    --ink-soft: #4a5160;
+    --ink-soft: #5a6170;
+    --ink-mute: #8a8f9a;
     --paper: #faf8f3;
+    --paper-card: #ffffff;
     --paper-warm: #fff9eb;
     --accent: #2d4373;
     --rule: #e3dfd4;
+    --rule-soft: #efece5;
     --heat-1: #c8e6c8;
     --heat-2: #fff4b8;
     --heat-3: #ffcf85;
     --heat-4: #ff9b5a;
     --heat-5: #e3553d;
     --hot: #b81e1e;
+    --hot-bg: #fff1f0;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
     background: var(--paper);
     color: var(--ink);
     font-family: 'Heebo', sans-serif;
-    line-height: 1.55;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
   }
-  .page {
-    max-width: 880px;
-    margin: 0 auto;
-    padding: 60px 40px 80px;
-  }
-  header {
-    text-align: center;
-    margin-bottom: 56px;
-    padding-bottom: 36px;
-    border-bottom: 1px solid var(--rule);
-  }
-  header h1 {
-    font-family: 'Assistant', sans-serif;
-    font-weight: 800;
-    font-size: 36px;
-    color: var(--accent);
-    letter-spacing: -0.5px;
-    margin-bottom: 14px;
-  }
-  header .sub {
-    font-size: 17px;
-    color: var(--ink-soft);
-    font-weight: 300;
-    max-width: 580px;
-    margin: 0 auto;
-  }
-  header .meta {
-    margin-top: 18px;
-    font-size: 13px;
-    color: var(--ink-soft);
-    opacity: 0.7;
-  }
-  .legend {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    margin: 30px auto 0;
-    font-size: 12px;
-    color: var(--ink-soft);
-    flex-wrap: wrap;
-  }
-  .legend-item { display: flex; align-items: center; gap: 6px; }
-  .legend-swatch {
-    width: 18px; height: 14px; border-radius: 3px;
-    border: 1px solid rgba(0,0,0,0.08);
-  }
-  .preamble {
-    background: var(--paper-warm);
-    border-right: 3px solid var(--accent);
-    padding: 18px 22px;
-    margin-bottom: 48px;
-    border-radius: 4px;
-    font-size: 15px;
-    color: var(--ink-soft);
-  }
-  .preamble strong { color: var(--ink); font-weight: 500; }
-
-  .section-marker {
-    display: flex; align-items: center; gap: 14px;
-    margin: 40px 0 24px;
-    color: var(--accent);
-    font-family: 'Assistant', sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-  }
-  .section-marker::before, .section-marker::after {
-    content: ''; flex: 1; height: 1px; background: var(--rule);
-  }
-
-  .station {
-    display: grid;
-    grid-template-columns: 64px 1fr;
-    gap: 18px;
-    margin-bottom: 0;
-    position: relative;
-  }
-  .station-icon {
-    width: 64px; height: 64px;
-    border-radius: 50%;
-    background: white;
-    border: 2px solid var(--accent);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px;
-    z-index: 2;
-    flex-shrink: 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  }
-  .station-icon.adhoc {
-    border-color: #999;
-    background: #f5f5f5;
-  }
-  .station-body {
-    background: white;
-    border: 1px solid var(--rule);
-    border-radius: 8px;
-    padding: 18px 22px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-  }
-  .station-body.adhoc {
-    background: #fafafa;
-    border-style: dashed;
-  }
-  .station-head {
-    display: flex; align-items: baseline; justify-content: space-between;
-    margin-bottom: 8px;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .station-num {
-    font-family: 'Assistant', sans-serif;
-    font-weight: 800;
-    color: var(--accent);
-    font-size: 13px;
-    letter-spacing: 1px;
-  }
-  .station-title {
-    font-family: 'Assistant', sans-serif;
-    font-weight: 700;
-    font-size: 19px;
-    color: var(--ink);
-    flex: 1;
-  }
-  .station-desc {
-    font-size: 14px;
-    color: var(--ink-soft);
-    margin-bottom: 12px;
-    line-height: 1.65;
-  }
-  .station-desc .quote {
-    font-style: italic;
-    color: var(--ink);
-    border-right: 2px solid var(--heat-4);
-    padding-right: 10px;
-    margin-top: 6px;
-    display: block;
-    font-size: 13.5px;
-  }
-  .station-meta {
-    display: flex; align-items: center; gap: 16px;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px dashed var(--rule);
-    font-size: 12px;
-    flex-wrap: wrap;
-  }
-  .heat {
-    display: flex; align-items: center; gap: 8px;
-  }
-  .heat-label {
-    color: var(--ink-soft);
-    font-weight: 500;
-  }
-  .heat-bar {
-    display: flex; gap: 2px;
-  }
-  .heat-cell {
-    width: 14px; height: 10px;
-    border-radius: 2px;
-    background: #e8e6df;
-  }
+  .page { max-width: 1180px; margin: 0 auto; padding: 40px 32px 60px; }
+  header { text-align: center; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--rule); }
+  header h1 { font-family: 'Assistant', sans-serif; font-weight: 800; font-size: clamp(26px, 4vw, 38px); color: var(--accent); letter-spacing: -0.5px; margin-bottom: 10px; }
+  header .sub { font-size: clamp(14px, 1.6vw, 16px); color: var(--ink-soft); font-weight: 400; max-width: 640px; margin: 0 auto; }
+  header .meta { margin-top: 14px; font-size: 12px; color: var(--ink-mute); letter-spacing: 0.3px; }
+  .summary { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 28px; margin-top: 22px; padding: 14px 18px; background: var(--paper-card); border: 1px solid var(--rule); border-radius: 10px; }
+  .stat { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink-soft); }
+  .stat strong { color: var(--ink); font-weight: 700; font-size: 16px; }
+  .stat-dot { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 28px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .page { padding: 20px 10px 32px; } .grid { gap: 8px; } .card { padding: 10px 11px 9px; } .card-title { font-size: 14px; } .card-flow { font-size: 11px; } .card-icon { font-size: 18px; } header h1 { font-size: 22px; } }
+  .card { background: var(--paper-card); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px 13px; position: relative; display: flex; flex-direction: column; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(45,67,115,0.08); }
+  .card.pain { background: var(--hot-bg); border-color: var(--hot); border-width: 1.5px; }
+  .card.adhoc { background: var(--paper-warm); border-style: dashed; }
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+  .card-num { font-family: 'Assistant', sans-serif; font-weight: 700; font-size: 12px; color: var(--accent); letter-spacing: 0.5px; }
+  .card-when { font-size: 11px; color: var(--ink-mute); margin-top: 1px; font-weight: 500; }
+  .card-icon { font-size: 22px; line-height: 1; opacity: 0.9; }
+  .card-title { font-family: 'Assistant', sans-serif; font-weight: 700; font-size: 16px; color: var(--ink); margin: 4px 0 8px; line-height: 1.3; }
+  .card-flow { font-size: 12px; color: var(--ink-soft); margin-bottom: 11px; line-height: 1.45; flex: 1; }
+  .card-flow .arrow { color: var(--ink-mute); margin: 0 4px; }
+  .card-flow strong { color: var(--ink); font-weight: 600; }
+  .heat-bar { display: flex; gap: 3px; margin-top: auto; }
+  .heat-cell { flex: 1; height: 6px; border-radius: 2px; background: var(--rule-soft); }
   .heat-cell.on-1 { background: var(--heat-1); }
   .heat-cell.on-2 { background: var(--heat-2); }
   .heat-cell.on-3 { background: var(--heat-3); }
   .heat-cell.on-4 { background: var(--heat-4); }
   .heat-cell.on-5 { background: var(--heat-5); }
-  .hot-flag {
-    background: var(--hot);
-    color: white;
-    padding: 3px 10px;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 11px;
-    letter-spacing: 0.3px;
-  }
-  .actor {
-    color: var(--ink-soft);
-    font-size: 12px;
-  }
-  .actor strong { color: var(--ink); font-weight: 500; }
-
-  .connector {
-    grid-column: 1;
-    width: 2px;
-    background: var(--rule);
-    margin: 6px auto;
-    height: 28px;
-  }
-  .connector.adhoc { background: transparent; border-right: 2px dashed #ccc; }
-
-  .reflection {
-    margin-top: 64px;
-    padding: 32px;
-    background: linear-gradient(135deg, #2d4373 0%, #1a2b4f 100%);
-    color: white;
-    border-radius: 10px;
-  }
-  .reflection h2 {
-    font-family: 'Assistant', sans-serif;
-    font-size: 24px;
-    margin-bottom: 18px;
-    font-weight: 700;
-  }
-  .reflection-item {
-    margin-bottom: 14px;
-    padding-right: 24px;
-    position: relative;
-    font-size: 15px;
-    line-height: 1.7;
-    opacity: 0.95;
-  }
-  .reflection-item::before {
-    content: '◂';
-    position: absolute;
-    right: 0;
-    color: var(--heat-3);
-    font-size: 18px;
-  }
-  .reflection-item strong { color: #ffd; }
-
-  footer {
-    margin-top: 48px;
-    text-align: center;
-    font-size: 12px;
-    color: var(--ink-soft);
-    opacity: 0.6;
-  }
-
-  @media print {
-    body { background: white; }
-    .page { padding: 20px; }
-    .station-body { box-shadow: none; }
-    .reflection {
-      background: #f0f0f0 !important;
-      color: var(--ink) !important;
-      -webkit-print-color-adjust: exact;
-    }
-    .reflection h2, .reflection strong { color: var(--accent) !important; }
-  }
+  .pain-badge { position: absolute; top: -8px; inset-inline-start: 12px; background: var(--hot); color: white; font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 12px; letter-spacing: 0.4px; }
+  .callout { margin-top: 32px; background: var(--hot-bg); border: 1px solid var(--hot); border-radius: 12px; padding: 22px 26px; }
+  .callout-title { font-family: 'Assistant', sans-serif; font-weight: 700; font-size: 17px; color: var(--hot); margin-bottom: 14px; }
+  .callout-items { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .callout-items { grid-template-columns: 1fr; } }
+  .callout-item { background: white; border-radius: 8px; padding: 12px 14px; border-inline-start: 4px solid var(--hot); }
+  .callout-item .ci-head { font-family: 'Assistant', sans-serif; font-weight: 700; color: var(--ink); font-size: 14px; margin-bottom: 4px; }
+  .callout-item .ci-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .callout-item .ci-quote { margin-top: 6px; font-style: italic; color: var(--ink-soft); font-size: 12.5px; border-inline-start: 2px solid var(--rule); padding-inline-start: 8px; }
+  .section-tag { grid-column: 1 / -1; text-align: center; font-size: 11px; color: var(--ink-mute); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 600; margin: 8px 0 -4px; position: relative; }
+  .section-tag::before, .section-tag::after { content: ''; position: absolute; top: 50%; width: 80px; height: 1px; background: var(--rule); }
+  .section-tag::before { right: calc(50% + 90px); }
+  .section-tag::after { left: calc(50% + 90px); }
+  @media (max-width: 600px) { .section-tag::before, .section-tag::after { display: none; } }
+  footer { margin-top: 36px; text-align: center; font-size: 11px; color: var(--ink-mute); }
 </style>
 </head>
 <body>
 <div class="page">
 
-<header>
-  <h1>המסע החודשי של השכר ברימון</h1>
-  <p class="sub">12 תחנות, מהיום הראשון בחודש ועד שהכסף בחשבון של 180 איש.</p>
-  <div class="meta">פגישת מיפוי · 27.5.2026</div>
-  <div class="legend">
-    <div class="legend-item"><div class="legend-swatch" style="background:var(--heat-1)"></div>שגרה</div>
-    <div class="legend-item"><div class="legend-swatch" style="background:var(--heat-3)"></div>דריכות</div>
-    <div class="legend-item"><div class="legend-swatch" style="background:var(--heat-5)"></div>חיכוך גבוה</div>
-    <div class="legend-item"><span class="hot-flag" style="font-size:10px">🔥 כאב מובהק</span></div>
+  <header>
+    <h1>המסע החודשי של השכר ברימון</h1>
+    <div class="sub">12 תחנות, מהיום הראשון בחודש ועד שהכסף בחשבון של 180 איש</div>
+    <div class="meta">פגישת מיפוי · 27.5.2026</div>
+    <div class="summary">
+      <div class="stat"><span class="stat-dot" style="background:var(--hot)"></span><strong>2</strong> כאבים מובהקים</div>
+      <div class="stat"><span class="stat-dot" style="background:var(--heat-4)"></span><strong>4</strong> תחנות חמות</div>
+      <div class="stat"><span class="stat-dot" style="background:var(--heat-1)"></span><strong>6</strong> תחנות בשגרה</div>
+      <div class="stat"><span class="stat-dot" style="background:var(--accent)"></span><strong>3</strong> שותפות עיקריות</div>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <div class="section-tag">מחוץ למחזור החודשי · אד-הוק</div>
+
+    <div class="card adhoc">
+      <div class="card-top"><div><div class="card-num">תחנה 01</div><div class="card-when">אד-הוק</div></div><div class="card-icon">👤</div></div>
+      <div class="card-title">קליטת עובד חדש</div>
+      <div class="card-flow">משאבי אנוש <span class="arrow">←</span> <strong>אולסיה</strong> <span class="arrow">←</span> יהודית · קל לפספס שדות</div>
+      <div class="heat-bar"><div class="heat-cell on-2"></div><div class="heat-cell on-2"></div><div class="heat-cell"></div><div class="heat-cell"></div><div class="heat-cell"></div></div>
+    </div>
+
+    <div class="section-tag">המחזור החודשי הקבוע · 12 שלבים</div>
+
+    <div class="card">
+      <div class="card-top"><div><div class="card-num">תחנה 02</div><div class="card-when">יום 1-30</div></div><div class="card-icon">📲</div></div>
+      <div class="card-title">דיווח נוכחות שוטף</div>
+      <div class="card-flow">180 עובדים <span class="arrow">←</span> <strong>מקאנו</strong> · רץ ברקע, ללא מעורבות</div>
+      <div class="heat-bar"><div class="heat-cell on-1"></div><div class="heat-cell"></div><div class="heat-cell"></div><div class="heat-cell"></div><div class="heat-cell"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div><div class="card-num">תחנה 03</div><div class="card-when">יום 1-2</div></div><div class="card-icon">✋</div></div>
+      <div class="card-title">בקרת מנהלניות סוף חודש</div>
+      <div class="card-flow">5 מנהלניות מאשרות במקאנו · <strong>אולסיה ממתינה</strong></div>
+      <div class="heat-bar"><div class="heat-cell on-2"></div><div class="heat-cell on-2"></div><div class="heat-cell"></div><div class="heat-cell"></div><div class="heat-cell"></div></div>
+    </div>
+
+    <div class="card pain">
+      <div class="pain-badge">🔥 כאב מס׳ 2</div>
+      <div class="card-top"><div><div class="card-num">תחנה 04</div><div class="card-when">יום 2-3</div></div><div class="card-icon">📥</div></div>
+      <div class="card-title">משיכת דו״ח ממקאנו</div>
+      <div class="card-flow">סדר עמודות משתנה כל חודש · <strong>אולסיה מסדרת ידנית</strong></div>
+      <div class="heat-bar"><div class="heat-cell on-5"></div><div class="heat-cell on-5"></div><div class="heat-cell on-5"></div><div class="heat-cell on-5"></div><div class="heat-cell on-5"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div><div class="card-num">תחנה 05</div><div class="card-when">יום 3</div></div><div class="card-icon">📋</div></div>
+      <div class="card-title">העתקה לגוגל שיט עבודה</div>
+      <div class="card-flow">תבנית קודמת <span class="arrow">←</span> <strong>אולסיה</strong> · לב החודש</div>
+      <div class="heat-bar"><div class="heat-cell on-3"></div><div class="heat-cell on-3"></div><div class="heat-cell on-3"></div><div class="heat-cell"></div><div class="heat-cell"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div><div class="card-num">תחנה 06</div><div class="card-when">יום 3</div></div><div class="card-icon">👀</div></div>
+      <div class="card-title">Sanity check ראשוני</div>
+      <div class="card-flow">מעבר ויזואלי · תלוי בעין · <strong>אולסיה</strong></div>
+      <div class="heat-bar"><div class="heat-cell on-2"></div><div class="heat-cell on-2"></div><div class="heat-cell"></div><div class="heat-cell"></div><div class="heat-cell"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div><div class="card-num">תחנה 07</div><div class="card-when">יום 3</div></div><div class="card-icon">📤</div></div>
+      <div class="card-title">שליחה ליהודית</div>
+      <div class="card-flow"><strong>אולסיה</strong> <span class="arrow">←</span> יהודית · הערות נכתבות פעמיים</div>
+      <div class="heat-bar"><div class="heat-cell on-3"></div><div class="heat-cell on-3"></div><div class="heat-cell on-3"></div><div class="heat-cell"></div><div class="heat-cell"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div><div class="card-num">תחנה 08</div><div class="card-when">יום 4-5</div></div><div class="card-icon">📬</div></div>
+      <div class="card-title">קבלת טיוטה</div>
+      <div class="card-flow">יהודית מחזירה 3 קבצים · 180 PDF + 2 אקסל · <strong>ממתינים</strong></div>
+      <div class="heat-bar"><div class="heat-cell on-1"></div><div class="heat-cell"></div><div class="heat-cell"></div><div class="heat-cell"></div><div class="heat-cell"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div><div class="card-num">תחנה 09</div><div class="card-when">יום 5</div></div><div class="card-icon">🔍</div></div>
+      <div class="card-title">בקרה בקובץ הבקרה</div>
+      <div class="card-flow">copy-paste לקובץ של <strong>אולסיה</strong> · עמודת ״פער״ מצביעה</div>
+      <div class="heat-bar"><div class="heat-cell on-3"></div><div class="heat-cell on-3"></div><div class="heat-cell on-3"></div><div class="heat-cell"></div><div class="heat-cell"></div></div>
+    </div>
+
+    <div class="card pain">
+      <div class="pain-badge">🔥 הכאב הגדול</div>
+      <div class="card-top"><div><div class="card-num">תחנה 10</div><div class="card-when">יום 5-6</div></div><div class="card-icon">📄</div></div>
+      <div class="card-title">בקרה ידנית על PDF תלושים</div>
+      <div class="card-flow">180 תלושים · יום וחצי · <strong>אין נטו עד המסב</strong></div>
+      <div class="heat-bar"><div class="heat-cell on-5"></div><div class="heat-cell on-5"></div><div class="heat-cell on-5"></div><div class="heat-cell on-5"></div><div class="heat-cell on-5"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div><div class="card-num">תחנה 11</div><div class="card-when">יום 6-7</div></div><div class="card-icon">↺</div></div>
+      <div class="card-title">סבב תיקונים</div>
+      <div class="card-flow">10-15 תיקונים · <strong>אולסיה ↔ יהודית</strong> · מייל ⇄ מייל</div>
+      <div class="heat-bar"><div class="heat-cell on-4"></div><div class="heat-cell on-4"></div><div class="heat-cell on-4"></div><div class="heat-cell on-4"></div><div class="heat-cell"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><div><div class="card-num">תחנה 12</div><div class="card-when">יום 7-8</div></div><div class="card-icon">🏦</div></div>
+      <div class="card-title">אישור סופי, מסב ותשלום</div>
+      <div class="card-flow">VLOOKUP אחרון · יהודית מעלה לבנק · <strong>180 משפחות</strong></div>
+      <div class="heat-bar"><div class="heat-cell on-2"></div><div class="heat-cell on-2"></div><div class="heat-cell"></div><div class="heat-cell"></div><div class="heat-cell"></div></div>
+    </div>
+
   </div>
-</header>
 
-<div class="preamble">
-  תיעוד של תהליך השכר ברימון בעיניים של מי שמסתכל מבחוץ. <strong>12 תחנות</strong> שזורמות זו לזו, מהראשון לחודש ועד שהכסף בחשבון. הטמפרטורה בכל תחנה משקפת את החיכוך היחסי שלה במחזור, לא רק את הצעדים הטכניים.
-</div>
-
-<!-- ADHOC SECTION -->
-<div class="section-marker">מחוץ למחזור החודשי</div>
-
-<div class="station">
-  <div class="station-icon adhoc">👤</div>
-  <div class="station-body adhoc">
-    <div class="station-head">
-      <span class="station-num">תחנה 01 · אד-הוק</span>
-      <span class="station-title">קליטת עובד חדש</span>
-    </div>
-    <div class="station-desc">
-      משאבי אנוש שולחים מייל "חופשי-אבל-קבוע" כשנקלט עובד חדש. הפרטים מועברים ליהודית (שיקובצקי) להקמה במערכת עוקץ.
-      <span class="quote">קל לפספס שדות. כל פעם פורמט קצת שונה.</span>
-    </div>
-    <div class="station-meta">
-      <div class="heat">
-        <span class="heat-label">חיכוך:</span>
-        <div class="heat-bar">
-          <div class="heat-cell on-2"></div><div class="heat-cell on-2"></div><div class="heat-cell"></div><div class="heat-cell"></div><div class="heat-cell"></div>
-        </div>
+  <div class="callout">
+    <div class="callout-title">🔥 שתי תחנות שמצדיקות התערבות מיידית</div>
+    <div class="callout-items">
+      <div class="callout-item">
+        <div class="ci-head">תחנה 04 · משיכת דו״ח ממקאנו</div>
+        <div class="ci-desc">סדר העמודות משתנה בכל חודש. דורש סידור ידני לפני שאפשר להתחיל לעבוד.</div>
+        <div class="ci-quote">״טמטום נוראי. סתם זה לוקח לי…״</div>
       </div>
-      <div class="actor">מקור: <strong>משאבי אנוש</strong> · אחראית: <strong>אולסיה</strong></div>
-    </div>
-  </div>
-</div>
-
-<!-- MONTHLY CYCLE -->
-<div class="section-marker">המחזור החודשי הקבוע</div>
-
-<!-- Station 2 -->
-<div class="connector"></div>
-<div class="station">
-  <div class="station-icon">📲</div>
-  <div class="station-body">
-    <div class="station-head">
-      <span class="station-num">תחנה 02 · יום 1-30</span>
-      <span class="station-title">דיווח נוכחות שוטף</span>
-    </div>
-    <div class="station-desc">
-      180 עובדים מ-5 מסגרות מזינים את הנוכחות שלהם למקאנו לאורך החודש. ללא מעורבות של אולסיה. המערכת עובדת.
-    </div>
-    <div class="station-meta">
-      <div class="heat">
-        <span class="heat-label">חיכוך:</span>
-        <div class="heat-bar">
-          <div class="heat-cell on-1"></div><div class="heat-cell"></div><div class="heat-cell"></div><div class="heat-cell"></div><div class="heat-cell"></div>
-        </div>
+      <div class="callout-item">
+        <div class="ci-head">תחנה 10 · בקרה ידנית על PDF תלושים</div>
+        <div class="ci-desc">180 תלושים, עין אחת, יום וחצי. אין שדה נטו בבקרות עד המסב הסופי.</div>
+        <div class="ci-quote">״אני בן אדם אחד שעובר על PDF, אני בוודאות מפספסת.״</div>
       </div>
-      <div class="actor">מובילים: <strong>180 עובדים</strong> · מערכת: <strong>מקאנו</strong></div>
     </div>
   </div>
-</div>
 
-<!-- Station 3 -->
-<div class="connector"></div>
-<div class="station">
-  <div class="station-icon">✋</div>
-  <div class="station-body">
-    <div class="station-head">
-      <span class="station-num">תחנה 03 · יום 1-2</span>
-      <span class="station-title">בקרת מנהלניות סוף חודש</span>
-    </div>
-    <div class="station-desc">
-      מנהלנית של כל מסגרת עוברת ומאשרת. אם מסגרת מאחרת, כל לוח הזמנים נדחק. תלוי באנשים, איכות לא אחידה בין מסגרות.
-    </div>
-    <div class="station-meta">
-      <div class="heat">
-        <span class="heat-label">חיכוך:</span>
-        <div class="heat-bar">
-          <div class="heat-cell on-2"></div><div class="heat-cell on-2"></div><div class="heat-cell"></div><div class="heat-cell"></div><div class="heat-cell"></div>
-        </div>
-      </div>
-      <div class="actor">מובילות: <strong>5 מנהלניות</strong> · ממתינה: <strong>אולסיה</strong></div>
-    </div>
-  </div>
-</div>
-
-<!-- Station 4 -->
-<div class="connector"></div>
-<div class="station">
-  <div class="station-icon">📥</div>
-  <div class="station-body">
-    <div class="station-head">
-      <span class="station-num">תחנה 04 · יום 2-3</span>
-      <span class="station-title">משיכת דו"ח חודשי ממקאנו</span>
-      <span class="hot-flag">🔥 כאב מס׳ 2</span>
-    </div>
-    <div class="station-desc">
-      סדר העמודות בדו"ח משתנה בכל חודש. נדרשת פעולה ידנית של פתיחה, הזזה ויישור לפני שאפשר להתחיל לעבוד.
-      <span class="quote">טמטום נוראי. סתם זה לוקח לי...</span>
-    </div>
-    <div class="station-meta">
-      <div class="heat">
-        <span class="heat-label">חיכוך:</span>
-        <div class="heat-bar">
-          <div class="heat-cell on-5"></div><div class="heat-cell on-5"></div><div class="heat-cell on-5"></div><div class="heat-cell on-5"></div><div class="heat-cell on-5"></div>
-        </div>
-      </div>
-      <div class="actor">בעלים יחיד: <strong>אולסיה</strong></div>
-    </div>
-  </div>
-</div>
-
-<!-- Station 5 -->
-<div class="connector"></div>
-<div class="station">
-  <div class="station-icon">📋</div>
-  <div class="station-body">
-    <div class="station-head">
-      <span class="station-num">תחנה 05 · יום 3</span>
-      <span class="station-title">העתקה לגוגל שיט עבודה</span>
-    </div>
-    <div class="station-desc">
-      התבנית מהחודש הקודם משוכפלת, מנוקה ומוזנת מחדש בנתונים העדכניים. ידני אבל מבוקר. הקובץ הזה הוא הלב של החודש.
-    </div>
-    <div class="station-meta">
-      <div class="heat">
-        <span class="heat-label">חיכוך:</span>
-        <div class="heat-bar">
-          <div class="heat-cell on-3"></div><div class="heat-cell on-3"></div><div class="heat-cell on-3"></div><div class="heat-cell"></div><div class="heat-cell"></div>
-        </div>
-      </div>
-      <div class="actor">בעלים: <strong>אולסיה</strong></div>
-    </div>
-  </div>
-</div>
-
-<!-- Station 6 -->
-<div class="connector"></div>
-<div class="station">
-  <div class="station-icon">👀</div>
-  <div class="station-body">
-    <div class="station-head">
-      <span class="station-num">תחנה 06 · יום 3</span>
-      <span class="station-title">Sanity check ראשוני</span>
-    </div>
-    <div class="station-desc">
-      מעבר ויזואלי על הנתונים. מי לא דיווח, מי נראה חריג. תלוי בעין האנושית. אם משהו לא נראה מוזר, לא נתפס.
-    </div>
-    <div class="station-meta">
-      <div class="heat">
-        <span class="heat-label">חיכוך:</span>
-        <div class="heat-bar">
-          <div class="heat-cell on-2"></div><div class="heat-cell on-2"></div><div class="heat-cell"></div><div class="heat-cell"></div><div class="heat-cell"></div>
-        </div>
-      </div>
-      <div class="actor">בעלים: <strong>אולסיה</strong></div>
-    </div>
-  </div>
-</div>
-
-<!-- Station 7 -->
-<div class="connector"></div>
-<div class="station">
-  <div class="station-icon">📤</div>
-  <div class="station-body">
-    <div class="station-head">
-      <span class="station-num">תחנה 07 · יום 3</span>
-      <span class="station-title">שליחה ליהודית (שיקובצקי)</span>
-    </div>
-    <div class="station-desc">
-      הקובץ מורד לאקסל ונשלח ליהודית במייל יחד עם רשימת הערות החודש. ההערות שכבר נכתבו בגוגל שיט נכתבות שוב בגוף המייל. עבודה כפולה.
-    </div>
-    <div class="station-meta">
-      <div class="heat">
-        <span class="heat-label">חיכוך:</span>
-        <div class="heat-bar">
-          <div class="heat-cell on-3"></div><div class="heat-cell on-3"></div><div class="heat-cell on-3"></div><div class="heat-cell"></div><div class="heat-cell"></div>
-        </div>
-      </div>
-      <div class="actor">שולחת: <strong>אולסיה</strong> · קולטת: <strong>יהודית</strong></div>
-    </div>
-  </div>
-</div>
-
-<!-- Station 8 -->
-<div class="connector"></div>
-<div class="station">
-  <div class="station-icon">📬</div>
-  <div class="station-body">
-    <div class="station-head">
-      <span class="station-num">תחנה 08 · יום 4-5</span>
-      <span class="station-title">קבלת טיוטה</span>
-    </div>
-    <div class="station-desc">
-      יום-יומיים אחרי השליחה, יהודית מחזירה שלושה קבצים: 180 PDF תלושים, דו"ח נתונים בקסל, ודו"ח עלות בקסל. שלב פסיבי, ממתינים.
-    </div>
-    <div class="station-meta">
-      <div class="heat">
-        <span class="heat-label">חיכוך:</span>
-        <div class="heat-bar">
-          <div class="heat-cell on-1"></div><div class="heat-cell"></div><div class="heat-cell"></div><div class="heat-cell"></div><div class="heat-cell"></div>
-        </div>
-      </div>
-      <div class="actor">מחזירה: <strong>יהודית</strong></div>
-    </div>
-  </div>
-</div>
-
-<!-- Station 9 -->
-<div class="connector"></div>
-<div class="station">
-  <div class="station-icon">🔍</div>
-  <div class="station-body">
-    <div class="station-head">
-      <span class="station-num">תחנה 09 · יום 5</span>
-      <span class="station-title">בקרה בקובץ הבקרה</span>
-    </div>
-    <div class="station-desc">
-      copy-paste משני קבצי האקסל לקובץ הבקרה שאולסיה בנתה לעצמה. עמודת "פער לא מוסבר" מצביעה לאן להסתכל. הקובץ הזה הוא תוצר של שנתיים ליטוש.
-    </div>
-    <div class="station-meta">
-      <div class="heat">
-        <span class="heat-label">חיכוך:</span>
-        <div class="heat-bar">
-          <div class="heat-cell on-3"></div><div class="heat-cell on-3"></div><div class="heat-cell on-3"></div><div class="heat-cell"></div><div class="heat-cell"></div>
-        </div>
-      </div>
-      <div class="actor">בעלים: <strong>אולסיה</strong> · הכלי: שלה</div>
-    </div>
-  </div>
-</div>
-
-<!-- Station 10 -->
-<div class="connector"></div>
-<div class="station">
-  <div class="station-icon">📄</div>
-  <div class="station-body">
-    <div class="station-head">
-      <span class="station-num">תחנה 10 · יום 5-6</span>
-      <span class="station-title">בקרה ידנית על PDF תלושים</span>
-      <span class="hot-flag">🔥 הכאב הגדול</span>
-    </div>
-    <div class="station-desc">
-      180 תלושים. עין אחת. יום וחצי. אין נטו בבקרות, רק במסב בסוף.
-      <span class="quote">אני בן אדם אחד שעובר על PDF, אני בוודאות מפספסת.</span>
-    </div>
-    <div class="station-meta">
-      <div class="heat">
-        <span class="heat-label">חיכוך:</span>
-        <div class="heat-bar">
-          <div class="heat-cell on-5"></div><div class="heat-cell on-5"></div><div class="heat-cell on-5"></div><div class="heat-cell on-5"></div><div class="heat-cell on-5"></div>
-        </div>
-      </div>
-      <div class="actor">בעלים יחיד: <strong>אולסיה</strong></div>
-    </div>
-  </div>
-</div>
-
-<!-- Station 11 -->
-<div class="connector"></div>
-<div class="station">
-  <div class="station-icon">↺</div>
-  <div class="station-body">
-    <div class="station-head">
-      <span class="station-num">תחנה 11 · יום 6-7</span>
-      <span class="station-title">סבב תיקונים מול יהודית</span>
-    </div>
-    <div class="station-desc">
-      10-15 תיקונים בחודש "טוב". בעבר זה היה 3-4 ימים, היום משופר. עדיין מייל ← תיקון ← מייל ← תיקון.
-    </div>
-    <div class="station-meta">
-      <div class="heat">
-        <span class="heat-label">חיכוך:</span>
-        <div class="heat-bar">
-          <div class="heat-cell on-4"></div><div class="heat-cell on-4"></div><div class="heat-cell on-4"></div><div class="heat-cell on-4"></div><div class="heat-cell"></div>
-        </div>
-      </div>
-      <div class="actor">פינג-פונג: <strong>אולסיה ↔ יהודית</strong></div>
-    </div>
-  </div>
-</div>
-
-<!-- Station 12 -->
-<div class="connector"></div>
-<div class="station">
-  <div class="station-icon">🏦</div>
-  <div class="station-body">
-    <div class="station-head">
-      <span class="station-num">תחנה 12 · יום 7-8</span>
-      <span class="station-title">אישור סופי, מסב ותשלום</span>
-    </div>
-    <div class="station-desc">
-      "תעלי לבנק." יהודית מעלה את המסב ושולחת עותק. VLOOKUP אחרון מוודא שכל מי שצריך לקבל מופיע, ושאין שגויים (חופשת לידה, חשבון בנק חסר, נטו שלילי). הכסף עובר. 180 משפחות מקבלות שכר.
-    </div>
-    <div class="station-meta">
-      <div class="heat">
-        <span class="heat-label">חיכוך:</span>
-        <div class="heat-bar">
-          <div class="heat-cell on-2"></div><div class="heat-cell on-2"></div><div class="heat-cell"></div><div class="heat-cell"></div><div class="heat-cell"></div>
-        </div>
-      </div>
-      <div class="actor">מבצעת: <strong>יהודית</strong> · מאשרת: <strong>אולסיה</strong></div>
-    </div>
-  </div>
-</div>
-
-<footer>
-  טיוטה למחשבה — לא להפצה
-</footer>
+  <footer>טיוטה למחשבה · לא להפצה</footer>
 
 </div>
 </body>
